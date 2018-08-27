@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <p>
+        在HTML当中，像input,textarea, 和 select这类表单元素会维持自身状态，并根据用户输入进行更新。
+        但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 setState() 方法进行更新。 
+    </p>
+    <p>
+        我们通过使react变成一种单一数据源的状态来结合二者。React负责渲染表单的组件仍然控制用
+        户后续输入时所发生的变化。相应的，其值由React控制的输入表单元素称为“受控组件”。
+    </p>
+    <p>
+        由于 value 属性是在我们的表单元素上设置的，因此显示的值将始终为 React数据源
+        上this.state.value 的值。由于每次按键都会触发 handleChange 来更新当前React的state，
+        所展示的值也会随着不同用户的输入而更新。
+    </p>
+    <p>
+        使用”受控组件”,每个状态的改变都有一个与之相关的处理函数（比如handleChange函数就是）。
+        这样就可以直接修改或验证用户输入。例如，我们如果想限制输入全部是大写字母，我们可以
+        将handleChange写为如下：this.setState({value: event.target.value.toUpperCase()});
+    </p>
+    <div id="root"></div>        
+    <script type="text/babel">
+      class NameForm extends React.Component{
+          constructor(props){
+              super(props);
+              this.state={value:''};
+              this.handleChange=this.handleChange.bind(this);
+              this.handleSubmit=this.handleSubmit.bind(this);
+          }
+
+          handleChange(event){
+              this.setState({value: event.target.value});
+          }
+
+          handleSubmit(event){
+              alert('A name was submitted: '+ this.state.value);
+              event.preventDefault();
+          }
+
+          render(){
+              return (
+                  <form onSubmit={this.handleSubmit}>
+                    <label>
+                        name:
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="submit" />
+                  </form>
+              )
+          }
+      }
+      
+      ReactDOM.render(
+        <NameForm />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
