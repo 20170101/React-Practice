@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <p>
+        在HTML中，select标签是用option标签上的selected属性来控制被选中的。但在React中，
+        并不使用之前的selected属性了，而是在根select标签上用value属性来表示选中项。这在
+        受控组件中更方便，因为你只需在一个地方更新组件。
+    </p>
+    <div id="root"></div>        
+    <script type="text/babel">
+      class FlavorForm extends React.Component{
+          constructor(props){
+              super(props);
+              this.state={value: 'banana'};
+
+              this.handleChange=this.handleChange.bind(this);
+              this.handleSubmit=this.handleSubmit.bind(this);
+          }
+
+          handleChange(event){
+              this.setState({value: event.target.value});
+          }
+
+          handleSubmit(event){
+              alert('Your favorite is : '+ this.state.value);
+              event.preventDefault();
+          }
+
+          render(){
+              return (
+                  <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Pick your favorite:
+                        <select value={this.state.value} onChange={this.handleChange}>
+                            <option value="apple">apple</option>
+                            <option value="orange">orange</option>
+                            <option value="banana">banana</option>
+                            <option value="lime">lime</option>
+                        </select>
+                    </label>
+                    <br/>
+                    <input type="submit" value="submit" />
+                  </form>
+              );
+          }
+      }
+
+      ReactDOM.render(
+        <FlavorForm />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
