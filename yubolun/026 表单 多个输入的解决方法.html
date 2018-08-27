@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <p>
+        当你有处理多个受控的input元素时，你可以通过给每个元素添加一个name属
+        性，来让处理函数根据 event.target.name的值来选择做什么。
+    </p>
+    <p>
+        注意我们如何使用ES6当中的计算属性名语法来更新与给定输入名称相对应的状态键： [name]: value，
+        相当于如下ES5语法： var partialState = {}; partialState[name] = value; this.setState(partialState);
+    </p>
+    <div id="root"></div>        
+    <script type="text/babel">
+      class Reservation extends React.Component{
+          constructor(props){
+              super(props);
+              this.state={
+                  isGoing: true,
+                  numberOfGuests: 2
+              };
+
+              this.handleInputChange=this.handleInputChange.bind(this);
+              this.handleSubmit=this.handleSubmit.bind(this);
+          }
+
+          handleInputChange(event){
+              const value=event.target.type === 'checkbox' ? event.target.checked: event.target.value;
+              const name=event.target.name;
+
+              this.setState({[name]: value});
+          }
+
+          handleSubmit(event){
+              alert('The checkbox checked is '+this.state.isGoing+'. The number input value is '+ this.state.numberOfGuests)
+              event.preventDefault();
+          }
+
+          render(){
+              return (
+                  <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Is going:
+                        <input name="isGoing" type="checkbox" checked={this.state.isGoing} onChange={this.handleInputChange} />
+                    </label>
+                    <br/>
+                    <label>
+                        number of guests:
+                        <input name="numberOfGuests" type="number" value={this.state.numberOfGuests} onChange={this.handleInputChange} />
+                    </label>
+                    <br/>
+                    <input type="submit" value="submit" />
+                  </form>
+              );
+          }
+      }
+
+      ReactDOM.render(
+        <Reservation />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
