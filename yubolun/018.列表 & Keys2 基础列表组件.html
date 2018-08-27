@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <p>
+        通常你需要渲染一个列表到组件中，我们可以把前面的例子重构成一个组件，这个组件接收numbers数组作为参数，
+        输出一个无序列表。
+    </p>
+    <script type="text/babel">
+      function NumberList(props) {
+          const numbers=props.numbers;
+          const listItems=numbers.map((number) => 
+            <li key={number.toString()}>{number}</li>
+          );
+
+          return (
+              <ul>{listItems}</ul>
+          );
+      }
+      
+      const numbers=[1,2,3,4,5];
+      ReactDOM.render(
+        <NumberList numbers={numbers} />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
