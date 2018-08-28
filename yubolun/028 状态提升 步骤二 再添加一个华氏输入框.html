@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <p>
+        现在我们有了一个新的需求，在提供摄氏度输入的基础之上，再提供一个华氏温度输入，并且它们能保持同步。
+    </p>
+    <p>
+        我们可以通过从 Calculator组件中抽离一个TemperatureInput组件出来。我们也会给它添加一个值为c
+        或f的表示温度单位的scale属性。
+    </p>
+    <p>
+        接下来要做的：我们现在有了两个输入框，但是当你在其中一个输入时，另一个并不会更新。这显然是不符合我们的需求的。
+        另外，我们此时也不能从 Calculator 组件中展示 BoilingVerdict 的渲染结果。因为现在表示温度的状态数据只存在于
+        TemperatureInput 组件当中。
+    </p>
+    <div id="root"></div>
+    <script type="text/babel">
+        const scaleNames={
+            c: 'Celsius',
+            f: 'Fahrenheit'
+        }
+
+        class TemperatureInput extends React.Component{
+            constructor(props){
+                super(props);
+                this.handleChange=this.handleChange.bind(this);
+                this.state={temperature:''};
+            }
+
+            handleChange(e){
+              this.setState({temperature: e.target.value});
+            }
+
+            render(){
+                const temperature=this.state.temperature;
+                const scale=this.props.scale;
+                return(
+                    <fieldset>
+                        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+                        <input value={temperature} onChange={this.handleChange} />
+                    </fieldset>
+                )
+            }
+        }
+      
+        class Calculator extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <TemperatureInput scale="c" />
+                        <TemperatureInput scale="f" />
+                    </div>
+                )
+            }
+
+        }
+
+      ReactDOM.render(
+        <Calculator />,
+        document.getElementById('root')
+      );
+    </script>
+</body>
+
+</html>
