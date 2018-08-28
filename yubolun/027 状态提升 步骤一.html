@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <p>
+        使用 react 经常会遇到几个组件需要共用状态数据的情况。这种情况下，我们最好将
+        这部分共享的状态提升至他们最近的父组件当中进行管理。
+    </p>
+    <div id="root"></div>        
+    <script type="text/babel">
+      function BoilingVerdict(props) {
+          if(props.celsius >=100){
+              return <p>水会烧开</p>;
+          }
+          return <p>水不会烧开</p>; 
+      }
+      
+      class Calculator extends React.Component{
+          constructor(props){
+              super(props);
+              this.handleChange=this.handleChange.bind(this);
+              this.state={temperature: ''};
+          }
+
+          handleChange(e){
+              this.setState({temperature: e.target.value});
+          }
+
+          render(){
+              const temperature=this.state.temperature;
+              return(
+                  <fieldset>
+                    <legend>输入一个摄氏温度</legend>
+                    <input value={temperature} onChange={this.handleChange} />
+                    <BoilingVerdict celsius={parseFloat(temperature)} />
+                  </fieldset>
+              )
+          }
+
+      }
+
+      ReactDOM.render(
+        <Calculator />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
