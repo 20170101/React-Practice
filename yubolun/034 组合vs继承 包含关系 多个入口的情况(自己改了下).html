@@ -57,7 +57,19 @@
 
             function App() {
                 return(
-                    <SplitPane left={<div><Contacts /><p>left</p></div>} right={<div><Chat /><p>right</p></div>} />
+                    <SplitPane 
+                        left={
+                            <div>
+                                <Contacts />
+                                <p>left</p>
+                            </div>
+                        } 
+                        right={
+                            <div>
+                                <Chat />
+                                <p>right</p>
+                            </div>
+                        } />
                 )
             }
 
