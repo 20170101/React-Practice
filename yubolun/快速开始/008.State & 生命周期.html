@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <p>
+        更新UI的正确方式，不再是之前那种setInterval了。
+    </p>
+    <p>
+        https://react.yubolun.com/docs/state-and-lifecycle.html 中有讲解clock组件挂载后都会做什么，讲的很好，需要多看几遍,
+        这里还讲了setState的使用注意事项，其中讲到状态更新可能是异步的，可以通过传方法而不是对象给setState解决，很重要。
+    </p>
+    <p>构造函数是唯一能够初始化 this.state 的地方</p>
+    <p>
+        https://react.yubolun.com/docs/state-and-lifecycle.html 这里还讲到一个词：自顶向下（也叫单向数据流），原文如下：
+        这通常被称为自顶向下或单向数据流。 任何状态始终由某些特定组件所有，并且从该状态导出的任何数据或 UI 只能影响树中下方的组件。
+    </p>
+
+    <script type="text/babel">
+        class Clock extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={date:new Date()};
+            }
+
+            componentDidMount(){//生命周期钩子, 挂载时
+                this.timerID=setInterval(
+                    ()=>this.tick(),
+                    1000
+                );
+            }
+
+            componentWillUnmount(){//生命周期钩子，卸载时
+                clearInterval(this.timerID);//卸载计时器
+            }
+
+            tick(){
+                this.setState({
+                    date:new Date()
+                })
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>Hello world!</h1>
+                        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>{/*JSX注释是这样写的，如果你不在render()中使用某些东西，它就不应该在状态中，比如timerID*/}
+                    </div>
+                    )
+            }
+        }
+        
+        ReactDOM.render(//还可以有第三个参数：callback 程序会在渲染或更新之后执行这个函数
+            <Clock />, 
+            document.getElementById('root')
+        )
+    </script>
+  </body>
+</html>

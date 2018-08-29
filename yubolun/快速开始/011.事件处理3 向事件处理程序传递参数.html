@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <p>
+        上面两个例子中，参数 e 作为 React 事件对象将会被作为第二个参数进行传递。通过箭头函数的方式，
+        事件对象必须显式的进行传递，但是通过 bind 的方式，事件对象以及更多的参数将会被隐式的进行传递。
+    </p>
+    <script type="text/babel">
+      class Hello extends React.Component{
+          constructor(props){
+              super(props);
+              this.state={name:'Hello world!'};
+          }
+
+          clickMe(name, e){//事件对象e要放在最后
+              e.preventDefault();
+              alert(name);
+          }
+
+          render(){
+              return(
+                  <div>
+                    <p>Hello</p>
+                    <a href="https://reactjs.org" onClick={this.clickMe.bind(this, this.state.name)}>Click</a>{/*通过state*/}
+                    <br />
+                    <a href="https://react.yubolun.com" onClick={this.clickMe.bind(this, this.props.who)}>Click</a>{/*通过props*/}
+                    <br />
+                    <a href="https://www.facebook.com" onClick={(e) => this.clickMe(this.props.who, e)}>Click</a>{/*通过arrow functions*/}
+                  </div>
+              )
+          }
+      }
+
+      ReactDOM.render(
+        <Hello who="She"/>,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>

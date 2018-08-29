@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <p>
+        注意：在实际生产开发中，大多数React应用只会调用一次ReactDOM.render()。在下一个章节中
+        我们将会详细介绍有状态组件实现DOM更新方式。
+    </p>
+    <p>
+        React DOM首先会比较元素内容先后的不同，而在渲染过程中只会更新改变了的部分。
+    </p>
+    <script type="text/babel">
+        function tick() {
+            const element=(
+                <div>
+                    {/*JSX中是这样写注释的，一对花括号，加块注释*/}
+                    <h1>Hello world!</h1>
+                    <h2>It is {new Date().toLocaleTimeString()}.</h2>    
+                </div>
+            );
+            ReactDOM.render(
+                element,
+                document.getElementById('root')
+            );
+        }    
+        
+        setInterval(tick, 1000);
+    </script>
+  </body>
+</html>
