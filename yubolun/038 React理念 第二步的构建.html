@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            body{
+                padding: 5px;
+            }
+        </style>
+	</head>
+	<body>
+        <p>
+            https://react.docschina.org/docs/thinking-in-react.html 这节很好，是讲述构建一个应用时的思考过程的，可以多看几遍。
+        </p>
+        <p>步骤：</p>
+        <ul>
+            <li>第一步：把 UI 划分出组件层级</li>
+            <li>第二步：用 React 创建一个静态版本</li>
+            <li>第三步：定义 UI 状态的最小(但完整)表示</li>
+            <li>第四步：确定你的 State 应该位于哪里</li>
+            <li>第五步：添加反向数据流</li>
+        </ul>
+        <p>
+            你可以自顶向下或者自底向上构建应用。也就是，你可以从层级最高的组件开始构建(即 FilterableProductTable开始)或
+            层级最低的组件开始构建(ProductRow)。在较为简单的例子中，通常自顶向下更容易，而在较大的项目中，自底向上会更容
+            易并且在你构建的时候有利于编写测试。
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            class ProductCategoryRow extends React.Component{
+                render(){
+                    return (
+                        <tr>
+                            <th colSpan="2">
+                                {this.props.category}
+                            </th>
+                        </tr>
+                    );
+                }
+            }
+
+            class ProductRow extends React.Component{
+                render(){
+                    var name=this.props.product.stocked?
+                        this.props.product.name :
+                        <span style={{color: 'red'}}>
+                            {this.props.product.name}
+                        </span>;
+                    return (
+                        <tr>
+                            <td>{name}</td>
+                            <td>{this.props.product.price}</td>
+                        </tr>
+                    );
+                }
+            }
+
+            class ProductTable extends React.Component{
+                render(){
+                    var rows=[];
+                    var lastCategory =null;
+                    this.props.products.forEach(function(product){
+                        if(product.category!==lastCategory){
+                            rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
+                        }
+                        rows.push(<ProductRow product={product} key={product.name} />) ;
+                        lastCategory=product.category;
+                    });
+                    return (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>{rows}</tbody>
+                        </table>
+                    );
+                }
+            }
+
+            class SearchBar extends React.Component{
+                render(){
+                    return (
+                        <form>
+                            <input type="text" placeholder="Search..." />
+                            <p>
+                                <input type="checkbox" />
+                                {''}
+                                Only show products in stock
+                            </p>
+                        </form>
+                    );
+                }
+            }
+
+            class FilterableProductTable extends React.Component{
+                render(){
+                    return (
+                        <div>
+                            <SearchBar />
+                            <ProductTable products={this.props.products} />
+                        </div>
+                    );
+                }
+            }
+
+            var PRODUCTS=[
+                {category: 'Sporting Goods', price:'$49.99', stocked:true, name:'Football'},
+                {category: 'Sporting Goods', price:'$9.99', stocked:true, name:'Baseball'},
+                {category: 'Sporting Goods', price:'$29.99', stocked:true, name:'Basketball'},
+                {category: 'Electronics', price:'$99.99', stocked:true, name:'iPod Touch'},
+                {category: 'Electronics', price:'$399.99', stocked:true, name:'iPhone 5'},
+                {category: 'Electronics', price:'$199.99', stocked:true, name:'Nexus 7'},
+            ];
+
+            ReactDOM.render(
+                <FilterableProductTable products={PRODUCTS} />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
