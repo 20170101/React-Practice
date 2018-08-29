@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            body{
+                padding: 5px;
+            }
+        </style>
+	</head>
+	<body>
+        <p>
+            辨别哪个组件应该拥有哪个 state的方法：
+        </p>
+        <ul>
+            <li>确定每一个需要这个 state 来渲染的组件。</li>
+            <li>找到一个公共所有者组件(一个在层级上高于所有其他需要这个 state 的组件的组件)</li>
+            <li>这个公共所有者组件或另一个层级更高的组件应该拥有这个 state。</li>
+            <li>如果你没有找到可以拥有这个 state 的组件，创建一个仅用来保存状态的组件并把它加入比这个公共所有者组件层级更高的地方。</li>
+        </ul>
+        <div id="container"></div>
+        <script type="text/babel">
+            class ProductCategoryRow extends React.Component{
+                render(){
+                    return (
+                        <tr>
+                            <th colSpan="2">
+                                {this.props.category}
+                            </th>
+                        </tr>
+                    );
+                }
+            }
+
+            class ProductRow extends React.Component{
+                render(){
+                    var name=this.props.product.stocked?
+                        this.props.product.name :
+                        <span style={{color: 'red'}}>
+                            {this.props.product.name}
+                        </span>;
+                    return (
+                        <tr>
+                            <td>{name}</td>
+                            <td>{this.props.product.price}</td>
+                        </tr>
+                    );
+                }
+            }
+
+            class ProductTable extends React.Component{
+                render(){
+                    var rows=[];
+                    var lastCategory =null;
+                    this.props.products.forEach((product) =>{
+                        if(product.name.indexOf(this.props.filterText)===-1 || (!product.stocked && this.props.inStockOnly)){
+                            return;
+                        }
+                        if(product.category!==lastCategory){
+                            rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
+                        }
+                        rows.push(<ProductRow product={product} key={product.name} />) ;
+                        lastCategory=product.category;
+                    });
+                    return (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>{rows}</tbody>
+                        </table>
+                    );
+                }
+            }
+
+            class SearchBar extends React.Component{
+                render(){
+                    return (
+                        <form>
+                            <input type="text" placeholder="Search..." value={this.props.filterText} />
+                            <p>
+                                <input type="checkbox" checked={this.inStockOnly} />
+                                {''}
+                                Only show products in stock
+                            </p>
+                        </form>
+                    );
+                }
+            }
+
+            class FilterableProductTable extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.state={
+                        filterText:'',
+                        inStockOnly:false
+                    };
+                }
+                render(){
+                    return (
+                        <div>
+                            <SearchBar filterText={this.state.filterText} inStockOnly={this.state.inStockOnly} />
+                            <ProductTable products={this.props.products} filterText={this.state.filterText} inStockOnly={this.state.inStockOnly} />
+                        </div>
+                    );
+                }
+            }
+
+            var PRODUCTS=[
+                {category: 'Sporting Goods', price:'$49.99', stocked:true, name:'Football'},
+                {category: 'Sporting Goods', price:'$9.99', stocked:true, name:'Baseball'},
+                {category: 'Sporting Goods', price:'$29.99', stocked:true, name:'Basketball'},
+                {category: 'Electronics', price:'$99.99', stocked:true, name:'iPod Touch'},
+                {category: 'Electronics', price:'$399.99', stocked:true, name:'iPhone 5'},
+                {category: 'Electronics', price:'$199.99', stocked:true, name:'Nexus 7'},
+            ];
+
+            ReactDOM.render(
+                <FilterableProductTable products={PRODUCTS} />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
