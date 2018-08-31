@@ -56,3 +56,14 @@ function App2() {
 }
 当你构建通用容器时，扩展属性会非常有用。然而，这样做也可能让很多不相关的属性，传递到不需要它们的组件
 中使代码变得混乱。我们建议你谨慎使用此语法。
+
+7.React 组件也可以通过数组的形式返回多个元素：
+render() {
+  // 不需要使用额外的元素包裹数组中的元素
+  return [
+    // 不要忘记 key :)
+    <li key="A">First item</li>,
+    <li key="B">Second item</li>,
+    <li key="C">Third item</li>,
+  ];
+}
