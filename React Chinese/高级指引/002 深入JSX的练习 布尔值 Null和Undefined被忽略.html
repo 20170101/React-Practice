@@ -4,15 +4,26 @@
     <meta charset="UTF-8" />
     <title>Hello World</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
-	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="text/babel">
+      let showHelloWorld=true;//然后再试试false
+
+      class HelloWorld extends React.Component{
+        render(){
+          return (
+            <p>Hello World!</p>
+          );
+        }
+      }
+
       class Demo extends React.Component{
           constructor(props){
+            debugger;
             super(props);
             this.state={aBooleanValue:true};
           }
@@ -23,14 +34,30 @@
                     <p>看看aBooleanValue的值是： {this.state.aBooleanValue}</p>
                     <hr/>
                     <p>看看String(aBooleanValue)的值是： {String(this.state.aBooleanValue)}</p>
+                    <hr />
+                    <div>
+                      根据条件来确定是否渲染React元素：
+                      {showHelloWorld && <HelloWorld />} {/*可以再试试把showHelloWorld改成false*/}
+                    </div>
+                    <hr />
+                    <div>
+                        值得注意的是，JavaScript 中的一些 “falsy” 值(比如数字0)，它们依然会被渲染。
+                        例如，下面的代码不会像你预期的那样运行，因为当 props.msg 为空数组时，它会打印0:
+                        {this.props.msg.length && <HelloWorld />} 
+                    </div>
+                    <hr />
+                    <div>
+                        要解决这个问题，请确保双与号前面的表达式始终为布尔值（this.props.msg.length>0）：
+                        {this.props.msg.length>0 && <HelloWorld />} 
+                    </div>
                   </div>
               );
           }
       }
 
       ReactDOM.render(
-        <Demo />,
-        document.getElementById('root')//mountNode
+        <Demo msg={[]}/>,
+        document.getElementById('root')
       );
     </script>
   </body>
