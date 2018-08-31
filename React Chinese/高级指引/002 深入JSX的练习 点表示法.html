@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        .blue {
+            border: 3px solid blue;
+        }
+
+        .orange {
+            border: 3px solid orange;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 MyComponents.DatePicker 的组件，你可以直接在 JSX 中使用它：
+    </p>
+    <div id="container"></div>
+    <script type="text/babel">
+            const MyComponents={
+                ColorInput:function ColorInput(props) {
+                    return <input type="text" className={props.color} />
+                }
+            }
+
+            function BlueInput() {
+                return <MyComponents.ColorInput color="blue" /> //用了点表示法
+            }
+
+            function OrangeInput() {
+                return <MyComponents.ColorInput color="orange" /> //用了点表示法
+            }
+
+            function SomeInput() {
+                return (
+                    <div>
+                        <BlueInput />
+                        <br/>
+                        <OrangeInput />
+                    </div>
+                );
+            }
+
+            ReactDOM.render(
+                <SomeInput />,
+                document.getElementById('container')
+            );
+        </script>
+</body>
+
+</html>
