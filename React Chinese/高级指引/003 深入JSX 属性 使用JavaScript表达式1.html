@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            你可以传递任何 {} 包裹的 JavaScript 表达式作为一个属性值.
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            function Hello(props) {
+                return <h3>Hello {props.num}</h3>;
+            }
+
+            ReactDOM.render(
+                <Hello num={1+2+3+4} />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
