@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            if 语句和 for 循环在 JavaScript中不是表达式（是语句），因此它们不能直接在 JSX 中使用，
+            但是你可以将它们放在周围的代码中.
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            function NumDescriber(props) {
+                let description;
+                if(props.num %2==0){
+                    description=<span style={{fontWeight:'bolder'}}>even</span>
+                }else{
+                    description=<span style={{fontWeight:'bolder'}}>odd</span>
+                }
+                return <div>{props.num} is an {description} number.</div>;
+            }
+
+            ReactDOM.render(
+                <NumDescriber num={1+2+3+4} />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
