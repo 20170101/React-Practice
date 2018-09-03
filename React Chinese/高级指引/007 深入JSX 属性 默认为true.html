@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            如果你没有给属性传值，它默认为true.
+        </p>
+        <p>
+            一般情况下，我们不建议这样使用，因为它会与 ES6 对象简洁表示法 混淆。
+            比如 {foo} 是 {foo: foo} 的简写，而不是 {foo: true}。这里能这样用，是因为它符合 HTML 的做法。
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            function Hello(props) {
+                return <h3>Hello {String(props.toWhat)}</h3>;
+            }
+
+            ReactDOM.render(
+                <Hello toWhat />,//与下行是等价的:
+                //<Hello toWhat={true} />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
