@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            当传递一个字符串常量时，该值会被解析为HTML非转义字符串（zqkang:非转义就是小于号本身，转义就是& lt ;）
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            function Hello(props) {
+                return <h3>Hello {props.toWhat}</h3>;
+            }
+
+            ReactDOM.render(
+                <Hello toWhat="&lt;3" />,//与下边两行是等价的:
+                //<Hello toWhat={"<3"} />,
+                //<Hello toWhat="<3" />,
+                //<Hello toWhat={"&lt;3"} />,//这个就不行了，直接显示的是&lt;3 而不是<3
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
