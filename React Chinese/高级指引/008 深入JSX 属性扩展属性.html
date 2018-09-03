@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            如果你已经有了个 props 对象，并且想在 JSX 中传递它，你可以使用 ... 作为扩展操作符来传递整个属性对象。
+        </p>
+        <p>
+            当你构建通用容器时，扩展属性会非常有用。然而，这样做也可能让很多不相关的属性，
+            传递到不需要它们的组件中使代码变得混乱。我们建议你谨慎使用此语法。
+        </p>
+        <div id="container"></div>
+        <script type="text/babel">
+            function FullName(props) {
+                return <h3>Full Name: {props.firstName+' '+props.lastName}</h3>;
+            }
+            const props={firstName: 'Michael', lastName:'Jorden'};
+            const fullName={firstName: 'LeBron', lastName:'James'};
+            ReactDOM.render(
+                //<FullName {...props} />,//与下两行是等价的:
+                <FullName {...fullName} />,
+                //<FullName firstName="Zq" lastName="Kang" />,
+                document.getElementById('container')
+            );
+        </script>
+	</body>
+</html>
+
