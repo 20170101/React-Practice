@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            在 React 的生命周期中，表单元素上的 value 属性将会覆盖 DOM 中的值。
+            使用非受控组件时，通常你希望 React 可以为其指定初始值，但不再控制后
+            续更新。要解决这个问题，你可以指定一个 defaultValue 属性而不是 value。
+        </p>
+        <p>
+            同样， checkbox, radit支持defaultChecked, select 和textarea支持defaultValue.
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            class NameForm extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.handleSubmit=this.handleSubmit.bind(this);
+                }
+
+                handleSubmit(event){
+                    alert('A name was submitted: '+this.input.value);
+                    event.preventDefault();
+                }
+
+                render(){
+                    return (
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Name:
+                                <input type="text" defaultValue="Bob" ref={(input) =>this.input=input} />
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                    )
+                }
+            }
+
+            ReactDOM.render(
+                <NameForm />,
+                document.getElementById('root')
+            );
+        </script>
+	</body>
+</html>
+
