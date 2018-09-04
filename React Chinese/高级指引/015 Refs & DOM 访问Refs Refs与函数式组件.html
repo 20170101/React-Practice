@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            你不能在函数式组件上使用 ref 属性，因为它们没有实例。如果你想使用 ref，就像你想使用
+            生命周期方法或者 state 一样，应该将其转换为 class 组件。但是，你可以在函数式组件内
+            部使用 ref，只要它指向一个 DOM 元素或者 class 组件.
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            function CustomTextInput(props) {
+                //这里必须声明textInput，这样ref回调才可以引用它
+                let textInput=null;
+
+                function handleClick() {
+                    textInput.focus();
+                }
+
+                return(
+                    <div>
+                        <input type="text" ref={(input) => {textInput=input;}} />
+                        <input type="button" value="Focus the text input" onClick={handleClick} />
+                    </div>
+                );
+            }
+
+            ReactDOM.render(
+                <CustomTextInput />,
+                document.getElementById('root')
+            );
+        </script>
+	</body>
+</html>
+
