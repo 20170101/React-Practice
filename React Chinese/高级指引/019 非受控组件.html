@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            要编写一个非受控组件，而非为每个状态更新 编写事件处理程序，你可以 使用 ref 从 DOM 获取表单值。
+        </p>
+        <p>
+            由于非受控组件将真实数据保存在 DOM 中，因此在使用非受控组件时，更容易同时集成 React 和非 
+            React 代码。如果你想快速而随性，这样做可以减小代码量。否则，你应该使用受控组件。
+        </p>
+        <p>
+            如果依然不清楚在哪种特定情况下选择哪种类型的组件，那么你应该阅读 这篇关于受控和非受控的表单输入
+            了解更多: https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            class NameForm extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.handleSubmit=this.handleSubmit.bind(this);
+                }
+
+                handleSubmit(event){
+                    alert('A name was submitted: '+this.input.value);
+                    event.preventDefault();
+                }
+
+                render(){
+                    return (
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Name:
+                                <input type="text" ref={(input) =>this.input=input} />
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                    )
+                }
+            }
+
+            ReactDOM.render(
+                <NameForm />,
+                document.getElementById('root')
+            );
+        </script>
+	</body>
+</html>
+
