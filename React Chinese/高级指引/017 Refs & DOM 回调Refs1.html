@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            React 也支持另一种设置 ref 的方式，称为“回调 ref”，更加细致地控制何时 ref 被设置和解除。
+            不同于传递 createRef() 创建的 ref 属性，你会传递一个函数。这个函数接受 React 组件的实
+            例或 HTML DOM 元素作为参数，以存储它们并使它们能被其他地方访问。
+        </p>
+        <p>
+            React 将在组件挂载时将 DOM 元素传入ref 回调函数并调用，当卸载时传入 null 并调用它。
+            ref 回调函数会在 componentDidMout 和 componentDidUpdate 生命周期函数前被调用
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            class CustomTextInput extends React.Component{
+                constructor(props){
+                    super(props);
+
+                    this.textInput=null;
+
+                    this.setTextInputRef=element => {
+                        this.textInput=element;
+                    };
+
+                    this.focusTextInput=()=>{
+                        //直接使用原生API使text输入框获得焦点
+                        if(this.textInput){
+                            this.textInput.focus();
+                        }
+                    };
+                }
+
+                componentDidMount(){
+                    //渲染后文本框自动获得焦点
+                    this.focusTextInput();
+                }
+
+                render(){
+                    //使用ref的回调将text输入框的DOM节点存储到React实例上（比如this.textInput)
+                    return(
+                        <div>
+                            <input type="text" ref={this.setTextInputRef} />
+                            <input type="button" value="Focus the text input" onClick={this.focusTextInput} />
+                        </div>
+                    );
+                }
+            }
+
+            ReactDOM.render(
+                <CustomTextInput />,
+                document.getElementById('root')
+            );
+        </script>
+	</body>
+</html>
+
