@@ -1,0 +1,23 @@
+你可以在组件间传递回调形式的 refs，就像你可以传递通过 React.createRef() 创建的对象 refs 一样。
+
+function CustomTextInput(props) {
+  return (
+    <div>
+      <input ref={props.inputRef} />
+    </div>
+  );
+}
+
+class Parent extends React.Component {
+  render() {
+    return (
+      <CustomTextInput
+        inputRef={el => this.inputElement = el}
+      />
+    );
+  }
+}
+
+在上面的例子中，Parent 传递给它的 ref 回调函数作为 inputRef 传递给 CustomTextInput，
+然后 CustomTextInput 通过 ref属性将其传递给 <input>。最终，Parent 中的 this.inputElement 
+将被设置为与 CustomTextIput 中的 <input> 元素相对应的 DOM 节点
