@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <p>
+        React 会在组件加载时将 DOM 元素传入 current 属性，在卸载时则会改回 
+        null。ref 的更新会发生在componentDidMount 或 componentDidUpdate 生命周期钩子之前。
+    </p>
+    <p>
+        如果我们想要包装上面的 CustomTextInput ，来模拟挂载之后立即被点击的话，
+        我们可以使用 ref 来访问自定义输入，并手动调用它的 focusTexInput 方法：
+    </p>
+    <p>需要注意的是，这种方法仅对 class 声明的 CustomTextInput 有效</p>
+    <div id="root"></div>
+    <script type="text/babel">
+      class CustomTextInput extends React.Component{//如果你在运行你的练习时报错了，不一定是你
+                                    //代码的问题，还可能是你的CDN访问出的错，所以可以用firefox再试试，
+                                    //firefox安翻墙的代理了一般情况都能访问到CDN
+          constructor(props){
+              super(props);
+              //创建ref存储textInput DOM元素
+              this.textInput=React.createRef();
+              this.focusTextInput=this.focusTextInput.bind(this);
+          }
+
+          focusTextInput(){
+              //直接使用原生API使text输入框获得焦点
+              //注意：通过current 取得DOM节点
+              debugger;
+              this.textInput.current.focus();
+          }
+          
+          render(){
+              //告诉React我们想把<input> ref关联到构造器里创建的textInput上
+              return(
+                  <div>
+                    <input id="text-input" type="text" ref={this.textInput} />
+                    <input type="button" value="Focus the text input" onClick={this.focusTextInput} />
+                  </div>
+              );
+          }
+
+      }
+
+      class AutoFocusTextInput extends React.Component{
+          constructor(props){
+              super(props);
+              this.cTextInput=React.createRef();
+          }
+
+          componentDidMount(){
+              this.cTextInput.current.focusTextInput();
+          }
+
+          render(){
+              return(
+                  <CustomTextInput ref={this.cTextInput} />
+              )
+          }
+      }
+
+      ReactDOM.render(
+        <AutoFocusTextInput />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>
