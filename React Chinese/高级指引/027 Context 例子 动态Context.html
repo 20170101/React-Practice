@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const themes={
+                light:{
+                    foreground:'#ffffff',
+                    background:'#222222'
+                },
+                dark:{
+                    foreground:'#000000',
+                    background:'#eeeeee'
+                }
+            };
+
+            const ThemeContext=React.createContext(
+                themes.dark//默认值
+            );
+
+            function ThemedButton (props) {
+                return (
+                    <ThemeContext.Consumer>
+                        {theme => (
+                            <button {...props} style={{backgroundColor:theme.background}}>change Theme</button>
+                        )}            
+                    </ThemeContext.Consumer>
+                );
+            }
+
+            //一个使用到ThemedButton组件的中间组件
+            function Toolbar(props) {
+                return(
+                    <ThemedButton onClick={props.changeTheme}>
+                    </ThemedButton>
+                );
+            }
+
+            class App extends React.Component{
+                constructor(props){
+                    super(props);
+                    this.state={
+                        theme: themes.light
+                    };
+
+                    this.toggleTheme=()=>{
+                        this.setState(state =>({
+                            theme: state.theme === themes.dark? themes.light: themes.dark
+                        }));
+                    };
+                }
+
+                render(){
+                    //ThemedButton位于ThemeProvider内，在外部使用时使用来自state里面的theme,默认dark theme(zqkang:会被传的覆盖)
+                    return(
+                        <div>{/*HTML也没有Page标签啊，不对，这块p大写字母，应该是个组件*/}
+                            <ThemeContext.Provider value={this.state.theme}>
+                                <Toolbar changeTheme={this.toggleTheme} />
+                            </ThemeContext.Provider>
+                            <hr />
+                            <div>{/*HTML也没有Section标签，这块S大写字母，应该是个组件*/}
+                                <ThemedButton />
+                            </div>
+                        </div>
+                    );
+                }
+            }
+
+            ReactDOM.render(<App />, document.getElementById('root'));//document.root);
+        </script>
+	</body>
+</html>
+
