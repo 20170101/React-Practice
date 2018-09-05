@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	</head>
+	<body>
+        <p>
+            经常需要从组件树中某个深度嵌套的组件中更新 context。在这种情况下，
+            可以通过 context 向下传递一个函数，以允许 Consumer 更新 context
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            const themes={
+                light:{
+                    foreground:'#ffffff',
+                    background:'#222222'
+                },
+                dark:{
+                    foreground:'#000000',
+                    background:'#eeeeee'
+                }
+            };
+
+            //确保默认值按类型传递
+            //createContext()匹配的属性是Consumers所期望的
+            const ThemeContext=React.createContext({
+                theme: themes.dark,//默认值
+                toggleTheme:() => {}
+            });
+
+            function ThemeTogglerButton () {
+                //Theme Toggler按钮不仅接收theme属性，也接收了一个来自context的toggleTheme函数
+                return (
+                    <ThemeContext.Consumer>
+                        {({theme, toggleTheme}) =>(
+                            <button onClick={toggleTheme} style={{backgroundColor: theme.background}}>Toggle Theme</button>
+                        )}            
+                    </ThemeContext.Consumer>
+                );
+            }
+
+            class App extends React.Component{
+                constructor(props){
+                    super(props);
+
+                    this.toggleTheme=()=>{
+                        this.setState(state =>({
+                            theme: state.theme === themes.dark? themes.light: themes.dark
+                        }));
+                    };
+                    //State 包含了updater函数 所以它可以传递给底层的context provider
+                    this.state={
+                        theme: themes.light,
+                        toggleTheme: this.toggleTheme
+                    };
+                }
+
+                render(){
+                    //入口state传递给provider
+                    return(
+                        <ThemeContext.Provider value={this.state}>
+                            <Content />
+                        </ThemeContext.Provider>
+                    );
+                }
+            }
+
+            function Content(){
+                return (
+                    <div>
+                        <ThemeTogglerButton />
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById('root'));
+        </script>
+	</body>
+</html>
+
