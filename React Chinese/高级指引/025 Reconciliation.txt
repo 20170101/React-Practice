@@ -1,0 +1,2 @@
+https://react.docschina.org/docs/reconciliation.html
+自己在一天早上到公司看的，当时神清气爽，看得很顺畅，也理解了。状态好，差不少啊。
