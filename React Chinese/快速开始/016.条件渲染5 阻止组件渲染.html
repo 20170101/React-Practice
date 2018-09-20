@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
-	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
+    <p>
+        在极少数情况下，你可能希望隐藏组件，即使它被其他组件渲染。让 render 方法返回 null 而不是它的渲染结果即可实现。 组件的 render 方法返回 null 并不会影响该组件生命周期方法的回调。例如，componentWillUpdate
+        和 componentDidUpdate 依然可以被调用。
+    </p>
     <div id="root"></div>
-    
+
     <script type="text/babel">
       function WarningBanner(props) {
           if(!props.warn){
@@ -21,6 +27,24 @@
                 Warning!
               </div>
           );
+      }
+
+      class WarningBanner2 extends React.Component{         
+        componentDidMount(){
+            alert('调用了componentDidMount生命周期方法');
+        }
+
+          render(){
+            if(!this.props.warn){
+                return null;
+            }
+              return (
+                <div className="warning">
+                    Warning!
+                </div>
+              );
+          }
+
       }
 
       class Page extends React.Component{
@@ -40,6 +64,7 @@
               return (
                   <div>
                     <WarningBanner warn={this.state.showWarning} />
+                    <WarningBanner2 warn={this.state.showWarning} />
                     <button onClick={this.handleToggleClick}>
                         {this.state.showWarning?'Hide':'Show'}
                     </button>
@@ -53,5 +78,6 @@
         document.getElementById('root')
       );
     </script>
-  </body>
+</body>
+
 </html>
