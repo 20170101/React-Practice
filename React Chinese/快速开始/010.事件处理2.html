@@ -24,7 +24,7 @@
           }
 
           handleClick(){
-              this.setState(prevState=>({
+              this.setState(prevState=>({//把constructor里的this.handleClick=this.handleClick.bind(this);注了，这里的this就变成undefined了
                   isToggleOn:!prevState.isToggleOn
               }));
           }
