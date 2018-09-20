@@ -25,7 +25,7 @@
     <script type="text/babel">
         class Clock extends React.Component{
             constructor(props){
-                super(props);//基础构造函数
+                super(props);//基础构造函数    类组件应始终使用props调用基础构造函数
                 this.state={date:new Date()};//状态与属性十分相似，但是状态是私有的，完全受控于当前组件。
             }
 
