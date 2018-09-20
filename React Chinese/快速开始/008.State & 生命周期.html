@@ -13,20 +13,20 @@
         更新UI的正确方式，不再是之前那种setInterval了。
     </p>
     <p>
-        https://react.yubolun.com/docs/state-and-lifecycle.html 中有讲解clock组件挂载后都会做什么，讲的很好，需要多看几遍,
+        https://react.docschina.org/docs/state-and-lifecycle.html 中有讲解clock组件挂载后都会做什么，讲的很好，需要多看几遍,
         这里还讲了setState的使用注意事项，其中讲到状态更新可能是异步的，可以通过传方法而不是对象给setState解决，很重要。
     </p>
     <p>构造函数是唯一能够初始化 this.state 的地方</p>
     <p>
-        https://react.yubolun.com/docs/state-and-lifecycle.html 这里还讲到一个词：自顶向下（也叫单向数据流），原文如下：
+        https://react.docschina.org/docs/state-and-lifecycle.html 这里还讲到一个词：自顶向下（也叫单向数据流），原文如下：
         这通常被称为自顶向下或单向数据流。 任何状态始终由某些特定组件所有，并且从该状态导出的任何数据或 UI 只能影响树中下方的组件。
     </p>
 
     <script type="text/babel">
         class Clock extends React.Component{
             constructor(props){
-                super(props);
-                this.state={date:new Date()};
+                super(props);//基础构造函数
+                this.state={date:new Date()};//状态与属性十分相似，但是状态是私有的，完全受控于当前组件。
             }
 
             componentDidMount(){//生命周期钩子, 挂载时
