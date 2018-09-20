@@ -29,7 +29,7 @@
                 this.state={date:new Date()};//状态与属性十分相似，但是状态是私有的，完全受控于当前组件。
             }
 
-            componentDidMount(){//生命周期钩子, 挂载时
+            componentDidMount(){//生命周期钩子, 挂载时     当组件输出到 DOM 后会执行 componentDidMount() 钩子
                 this.timerID=setInterval(
                     ()=>this.tick(),
                     1000
@@ -41,7 +41,7 @@
             }
 
             tick(){
-                this.setState({
+                this.setState({//不要直接更新状态,如：不要直接更新状态 是不会重新渲染组件的，要用setState方法
                     date:new Date()
                 })
             }
