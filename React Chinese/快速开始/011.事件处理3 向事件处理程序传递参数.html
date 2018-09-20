@@ -29,11 +29,15 @@
               return(
                   <div>
                     <p>Hello</p>
-                    <a href="https://reactjs.org" onClick={this.clickMe.bind(this, this.state.name)}>Click</a>{/*通过state*/}
+                    <a href="https://reactjs.org" onClick={this.clickMe.bind(this, this.state.name)}>Click</a>{/*通过state, 通过 bind 的方式，事件对象以及更多的参数将会被隐式的进行传递, 这里我并未传递e但是clickMe方法还是能接收到e*/}
                     <br />
-                    <a href="https://react.yubolun.com" onClick={this.clickMe.bind(this, this.props.who)}>Click</a>{/*通过props*/}
+                    <a href="https://react.docschina.org" onClick={this.clickMe.bind(this, this.props.who)}>Click</a>{/*通过props, 通过 bind 的方式，事件对象以及更多的参数将会被隐式的进行传递, 这里我并未传递e但是clickMe方法还是能接收到e*/}
                     <br />
-                    <a href="https://www.facebook.com" onClick={(e) => this.clickMe(this.props.who, e)}>Click</a>{/*通过arrow functions*/}
+                    <a href="https://www.facebook.com" onClick={(e) => this.clickMe(this.props.who, e)}>Click</a>{/*通过arrow functions, 通过箭头函数的方式，
+                        事件对象必须显式的进行传递*/}
+                    <br />
+                    <a href="https://www.baidu.com" onClick={(e) => this.clickMe(this.props.who)}>Click</a>{/*通过arrow functions, 通过箭头函数的方式，
+                       事件对象必须显式的进行传递, 我这里仿照前两个没显示传e，结果clickMe收不到e*/}
                   </div>
               )
           }
