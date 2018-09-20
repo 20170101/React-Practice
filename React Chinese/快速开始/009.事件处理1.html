@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <a href="#" onclick="console.log('The link was clicked.'); return false">
+    <a href="baidu.com" onclick="console.log('The link was clicked.'); return false"><!--html中，用return false好使-->
         Click me.
     </a>
     <p>
@@ -18,12 +18,13 @@
     <script type="text/babel">
       function ActionLink() {
           function handleClick(e){
-              e.preventDefault();
+              //e.preventDefault(); //好使，可以阻止默认行为（跳转）
               console.log('The link was clicked.');
+              return false; //不好使，不能阻止默认行为（跳转）
           }
 
           return(
-              <a href="#" onClick={handleClick}>Click me</a> {/*React事件绑定属性的命名采用驼峰式写法，而不是小写,像html中可以写成onclick而react中要写成onClick*/}
+              <a href="cnblog.com" onClick={handleClick}>Click me</a> //React事件绑定属性的命名采用驼峰式写法，而不是小写,像html中可以写成onclick而react中要写成onClick
           );
       }
 
