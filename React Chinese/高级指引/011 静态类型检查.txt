@@ -1,1 +1,1 @@
-涉及Flow或者TypeScript,另外问了下暂时用的是prop-types时行类型检查的。
+涉及Flow或者TypeScript,另外问了下暂时用的是prop-types进行类型检查的。
