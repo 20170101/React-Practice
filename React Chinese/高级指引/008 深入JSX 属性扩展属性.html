@@ -26,6 +26,8 @@
                 //<FullName {...props} />,//与下两行是等价的:
                 <FullName {...fullName} />,
                 //<FullName firstName="Zq" lastName="Kang" />,
+                //<FullName {fullName} />, //不行，会报错：ncaught SyntaxError: Inline Babel script: Unexpected token (11:27)
+                //<FullName fullName />,//不好使，为：Full Name: undefined undefined
                 document.getElementById('container')
             );
         </script>
