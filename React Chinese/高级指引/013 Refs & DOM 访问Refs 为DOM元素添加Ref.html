@@ -18,7 +18,7 @@
                                     //代码的问题，还可能是你的CDN访问出的错，所以可以用firefox再试试，
                                     //firefox安翻墙的代理了一般情况都能访问到CDN
           constructor(props){
-              super(props);
+              super(props);//基础构造函数    类组件应始终使用props调用基础构造函数
               //创建ref存储textInput DOM元素
               this.textInput=React.createRef();
               this.focusTextInput=this.focusTextInput.bind(this);
