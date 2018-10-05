@@ -28,8 +28,8 @@
             //确保默认值按类型传递
             //createContext()匹配的属性是Consumers所期望的
             const ThemeContext=React.createContext({
-                theme: themes.dark,//默认值
-                toggleTheme:() => {}
+                theme: themes.dark,//默认值 //确保默认值按类型传递，类型为dark对象 
+                toggleTheme:() => {} //确保默认值按类型传递，类型为函数
             });
 
             function ThemeTogglerButton () {
