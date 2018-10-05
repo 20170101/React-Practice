@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            .light{
+                width:100px;
+                height:50px;
+                background-color: gray;
+            }
+        </style>
+	</head>
+	<body>
+        <p>
+            为了保持 context 快速进行二次渲染， React 需要使每一个 Consumer 在组件树中成
+            为一个单独的节点。
+        </p>
+        <p>
+            如果两个或者多个上下文的值经常被一起使用，也许你需要考虑你自己渲染属性的组件提供给它们。
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            //主题上下文，默认light
+            const ThemeContext=React.createContext('light');
+
+            //登陆用户上下方
+            const UserContext=React.createContext();
+
+            //一个依赖于两个上下方的中间组件
+            function Toolbar(props) {
+                return(
+                    <ThemeContext.Consumer>
+                        {theme => (
+                            <UserContext.Consumer>
+                                {user => (
+                                    <button className={theme}>{user}</button>
+                                )}
+                            </UserContext.Consumer>
+                        )}
+                    </ThemeContext.Consumer>
+                );
+            }
+
+            class App extends React.Component{
+                render(){
+                    const {signedInUser, theme} =this.props;
+
+                    //App组件提供上下方的初始值
+                    return(
+                        <ThemeContext.Provider value={theme}>
+                            <UserContext.Provider value={signedInUser}>
+                                <Toolbar />
+                            </UserContext.Provider>
+                        </ThemeContext.Provider>
+                    )
+                }
+            }
+            
+            ReactDOM.render(<App signedInUser="zq" theme="light" />, document.getElementById('root'));
+        </script>
+	</body>
+</html>
+
