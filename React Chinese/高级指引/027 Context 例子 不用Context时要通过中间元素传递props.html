@@ -16,6 +16,10 @@
 	</style>
   </head>
   <body>
+		<p>
+				注意：不要仅仅为了避免在几个层级下的组件传递 props 而使用 context，它是被用于
+				在多个层级的多个组件需要访问相同数据的情景。
+		</p>
     <div id="root"></div>
     <script type="text/babel">
 		function ThemedButton(props){
