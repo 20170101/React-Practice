@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>    
+	  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<style>
+		.dark{
+			width:200px;
+			height:50px;
+			background-color:orange;
+		}
+	</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+		function ThemedButton(props){
+			return <button className={props.theme}>click me</button>;
+		}
+		
+		//中间组件
+		function Toolbar(props){
+			//Toolbar组件必须添加一个额外的theme属性，然后传递它给ThemedButton组件
+			return(
+				<div>
+					<ThemedButton theme={props.theme} />
+				</div>
+			);
+		}
+		
+		class App extends React.Component{
+			render(){
+				return <Toolbar theme="dark" />;
+			}
+		}
+
+		  ReactDOM.render(
+			<App />,
+			document.getElementById('root')//mountNode
+		  );
+    </script>
+  </body>
+</html>
