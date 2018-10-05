@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            .light{
+                width:100px;
+                height:50px;
+                background-color: gray;
+            }
+
+            .dark{
+                width:100px;
+                height:50px;
+                background-color: orange;
+            }
+        </style>
+	</head>
+	<body>
+        <p>
+            在生命周期方法中从上下方访问值是一种相对常见的用例。而不是将上下方添加到每个
+            生命周期方法中，只需要将它作为一个props传递，然后像通常使用props一样去使用它。
+        </p>
+        <p>
+            教程中的例子不完整，自己瞎写的，以后再细琢磨琢磨
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            const ThemeContext=React.createContext('light');
+
+            class Button extends React.Component{
+                componentDidMount(){
+                    //ThemeContext value is this.props.theme
+                    console.log('ThemeContext value in componentDidMount is: '+this.props.theme);
+                }
+
+                componentDidUpdate(prevProps, prevState){
+                    //prevProps ThemeContext value is prevProps.theme
+                    //New ThemeContext value is this.props.theme
+                    console.log('The prevProps ThemeContext value in componentDidUpdate is: '+prevProps.theme);
+                    console.log('New ThemeContext value in componentDidUpdate is: '+this.props.theme);
+                }
+
+                render(){
+                    const {theme, children} =this.props;
+                    return(
+                        <button className={theme?theme:'dark'}>
+                            {children}
+                        </button>
+                    );
+                }
+            }
+
+            class Middleware extends React.Component{
+                render(){
+                    const {theme, children} =this.props;
+
+                    return(
+                        <ThemeContext.Consumer>
+                            {theme => <Button {...this.props} theme={theme} />}
+                        </ThemeContext.Consumer>
+                    );
+                }
+            }
+
+            class App extends React.Component{
+                render(){
+                    const {theme, children} =this.props;
+
+                    return(
+                        <ThemeContext.Provider  value="theme">
+                            <Middleware theme={theme} children={children} />
+                        </ThemeContext.Provider>
+                    );
+                }
+            }
+            
+            ReactDOM.render(<App theme="light" children="abc" />, document.getElementById('root'));
+        </script>
+	</body>
+</html>
+
