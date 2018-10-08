@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            .light{
+                width:100px;
+                height:50px;
+                background-color: gray;
+            }
+
+            .dark{
+                width:100px;
+                height:50px;
+                background-color: orange;
+            }
+        </style>
+	</head>
+	<body>
+        <p>
+            
+        </p>
+        <div id="root"></div>
+        <script type="text/babel">
+            const ThemeContext=React.createContext('light');
+
+            //在函数中引入组件
+            function withTheme(Component) {//我们可以创建一个命名为 withTheme 高阶组件
+                //然后返回另一个组件
+                return function ThemeComponent(props){
+                    //最后使用context theme渲染这个被封装组件，
+                    //注意我们照常引用了被添加的属性
+                    return(
+                        <ThemeContext.Consumer>
+                            {theme => <Component {...props} theme={theme} />}
+                        </ThemeContext.Consumer>
+                    );
+                }
+            }
+
+            function Button({theme, ...rest}) {
+                return <button className={theme} {...rest} />;
+            }
+
+            const ThemedButton=withTheme(Button);//目前任何组件都依赖于主题 context，它们都可以很容易的使用我们创建的 withTheme 函数进行订阅。
+            
+            ReactDOM.render(<ThemedButton theme="light" children="abc" />, document.getElementById('root'));
+        </script>
+	</body>
+</html>
+
