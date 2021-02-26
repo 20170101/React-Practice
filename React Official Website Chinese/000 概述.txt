@@ -1,6 +1,0 @@
-官网：https://reactjs.org/ 
-其中有支持很多语言了，选择简体中文，跳转到官方中文网站：
-https://zh-hans.reactjs.org/
-
-v17.0.1
-

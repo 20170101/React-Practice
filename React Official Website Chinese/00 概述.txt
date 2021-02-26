@@ -1,0 +1,17 @@
+官网：https://reactjs.org/ 
+现在支持很多语言了，选择简体中文，跳转到官方中文网站：
+https://zh-hans.reactjs.org/
+
+学习的版本：v17.0.1
+
+如果你喜欢边做边学，请从实践教程开始：
+https://zh-hans.reactjs.org/tutorial/tutorial.html
+如果你喜欢一步步学习概念，请从 Hello World 开始：
+https://zh-hans.reactjs.org/docs/hello-world.html
+
+当你对一些 JavaScript 知识感到疑惑时，MDN 和 javascript.info 是很棒的资源网站。你也可以去社区支持论坛寻求帮助
+上边说的三个网站分别是：
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+https://javascript.info/
+https://zh-hans.reactjs.org/community/support.html
+
