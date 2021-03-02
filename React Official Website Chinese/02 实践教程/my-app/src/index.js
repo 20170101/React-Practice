@@ -6,7 +6,7 @@ class Square extends React.Component {//zqkang: 方块，即棋盘里的一个�
     render() {
       return (
         <button className="square">
-          {/* TODO */}
+          {this.props.value}
         </button>
       );
     }
@@ -14,7 +14,7 @@ class Square extends React.Component {//zqkang: 方块，即棋盘里的一个�
   
   class Board extends React.Component {//zqkang, 板子，即棋盘
     renderSquare(i) {
-      return <Square />;
+      return <Square value={i} />;
     }
   
     render() {
