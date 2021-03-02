@@ -3,10 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {//zqkang: 方块，即棋盘里的一个个小格
+    constructor(props){
+        super(props);
+        /**
+         * 注意：在js class中，每次你定义其子类的构造函数时，都需要调用super方法。因此，在所有
+         * 含有构造函数的React组件中，构造函数必须以super(props)开头。
+         */
+        this.state={
+            value:null,
+        };
+    }
+
     render() {
       return (
-        <button className="square">
-          {this.props.value}
+        <button 
+            className="square" 
+            onClick={() => this.setState({value:'X'})}>
+          {this.state.value}
         </button>
       );
     }
