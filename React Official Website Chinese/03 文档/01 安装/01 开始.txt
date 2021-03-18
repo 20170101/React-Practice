@@ -1,1 +1,28 @@
 https://zh-hans.reactjs.org/docs/getting-started.html
+
+CodePen:
+https://codepen.io/pen?&editors=0010
+
+CodeSandbox:
+https://codesandbox.io/s/new
+
+Stackblitz:
+https://stackblitz.com/edit/react-wcrh4j
+
+Tania Rescia的React概览：
+https://www.taniarascia.com/getting-started-with-react/
+
+JavaScript概览：
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+https://javascript.info/
+https://zh-hans.reactjs.org/community/support.html
+
+React哲学：
+很多用户认为阅读 React 哲学是他们最终对 React 恍然大悟的时刻。它可能是最老的 React 教程，但它依然极具价值
+https://zh-hans.reactjs.org/docs/thinking-in-react.html
+
+推荐资源清单：
+https://zh-hans.reactjs.org/community/courses.html
